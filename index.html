@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TRIGA X</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+  /* Background video fullscreen */
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    overflow: hidden;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    background: black;
+  }
+
+  #bg-video {
+    position: fixed;
+    right: 0; bottom: 0;
+    min-width: 100%; min-height: 100%;
+    z-index: -1;
+    filter: brightness(0.5);
+    object-fit: cover;
+  }
+
+  /* Neon text styles */
+  h1 {
+    font-size: 5rem;
+    text-align: center;
+    margin-top: 3rem;
+    user-select: none;
+  }
+  .neon-blue {
+    color: #00bfff;
+    text-shadow:
+      0 0 5px #00bfff,
+      0 0 10px #00bfff,
+      0 0 20px #00bfff,
+      0 0 40px #00bfff,
+      0 0 80px #00bfff;
+    display: inline-block;
+  }
+  .neon-red {
+    color: #ff1a1a;
+    text-shadow:
+      0 0 5px #ff1a1a,
+      0 0 10px #ff1a1a,
+      0 0 20px #ff1a1a,
+      0 0 40px #ff1a1a,
+      0 0 80px #ff1a1a;
+    display: inline-block;
+  }
+
+  /* Subtitle */
+  #subtitle {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-top: -1rem;
+    letter-spacing: 0.2em;
+    color: #aaa;
+  }
+
+  /* Tabs container */
+  #tabs {
+    width: 400px;
+    max-width: 90vw;
+    margin: 3rem auto 0 auto;
+    background: rgba(0,0,0,0.6);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  /* Tab buttons */
+  .tab-buttons {
+    display: flex;
+  }
+
+  .tab-buttons button {
+    flex: 1;
+    background: #111;
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  .tab-buttons button.active {
+    background: #222;
+    color: #00bfff;
+    border-bottom: 3px solid #00bfff;
+  }
+  .tab-buttons button.active.red {
+    color: #ff1a1a;
+    border-bottom-color: #ff1a1a;
+  }
+  .tab-buttons button:hover:not(.active) {
+    background: #333;
+  }
+
+  /* Tab content */
+  .tab-content {
+    padding: 1.5rem;
+    font-size: 1.1rem;
+    color: #eee;
+    min-height: 150px;
+  }
+
+  /* Copy button */
+  #copy-btn {
+    margin-top: 1rem;
+    background: #00bfff;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+  #copy-btn:hover {
+    background: #0080cc;
+  }
+
+  /* Link to help page */
+  #help-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #00bfff;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  /* Help page modal */
+  #help-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.2rem;
+    padding: 2rem;
+    max-width: 600px;
+    margin: auto;
+    border-radius: 10px;
+  }
+
+  #help-modal.active {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #help-modal button {
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    background: #ff1a1a;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Background video from Pexels or similar (YouTube background embed is tricky for direct video backgrounds) -->
+<video autoplay muted loop id="bg-video" playsinline>
+  <source src="https://cdn.pixabay.com/vimeo/449345548/Fireplace-60767.mp4?width=1920&hash=01a871c7dbd8523cb24493656f4690d1d3ac6070" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<h1><span class="neon-blue">TRIGA</span> <span class="neon-red">X</span></h1>
+<div id="subtitle">YOUR ULTIMATE SCRIPTING UTILITY</div>
+
+<div id="tabs">
+  <div class="tab-buttons">
+    <button class="active" data-tab="script">Script</button>
+    <button data-tab="discord">Discord</button>
+    <button data-tab="help">Help</button>
+  </div>
+
+  <div class="tab-content" id="tab-script">
+    <p>Welcome to the Script tab. Here you can find your ultimate scripting tools and resources.</p>
+  </div>
+
+  <div class="tab-content" id="tab-discord" style="display:none;">
+    <p>Join our Discord community to get the latest updates and support:</p>
+    <p><a href="https://discord.gg/yourdiscordlink" target="_blank" style="color:#00bfff; text-decoration: underline;">https://discord.gg/yourdiscordlink</a></p>
+  </div>
+
+  <div class="tab-content" id="tab-help" style="display:none;">
+    <p>Need help? Here's some useful info you can copy:</p>
+    <pre id="help-text" style="background:#222; padding: 1rem; border-radius: 5px; user-select: text;">
+Welcome to TRIGA X help!
+- For script usage, visit the Script tab.
+- Join our Discord for live support.
+- Contact support@example.com for any issues.
+    </pre>
+    <button id="copy-btn">Copy Help Text</button>
+    <div id="help-link">Open Detailed Help Page</div>
+  </div>
+</div>
+
+<!-- Help modal -->
+<div id="help-modal">
+  <div>
+    <h2>Detailed Help Page</h2>
+    <p>This page contains extended help and FAQs for TRIGA X users.</p>
+    <ul>
+      <li><strong>How to use scripts:</strong> Use the Script tab to access and run scripts.</li>
+      <li><strong>Discord Support:</strong> Our Discord server is open 24/7 for questions.</li>
+      <li><strong>Contact:</strong> Reach us via email or Discord DMs.</li>
+      <li><strong>Clipboard:</strong> Use the Copy button in the Help tab to quickly copy essential info.</li>
+    </ul>
+    <button id="close-help">Close</button>
+  </div>
+</div>
+
+<script>
+  // Tab switching
+  const buttons = document.querySelectorAll('.tab-buttons button');
+  const contents = {
+    script: document.getElementById('tab-script'),
+    discord: document.getElementById('tab-discord'),
+    help: document.getElementById('tab-help')
+  };
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active', 'red'));
+      btn.classList.add('active');
+
+      // If Discord tab, color red on active X
+      if(btn.dataset.tab === 'discord') {
+        btn.classList.add('red');
+      }
+
+      // Show selected content, hide others
+      for (const key in contents) {
+        contents[key].style.display = (key === btn.dataset.tab) ? 'block' : 'none';
+      }
+    });
+  });
+
+  // Copy to clipboard button
+  document.getElementById('copy-btn').addEventListener('click', () => {
+    const text = document.getElementById('help-text').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      alert('Help text copied to clipboard!');
+    }).catch(() => {
+      alert('Failed to copy. Please copy manually.');
+    });
+  });
+
+  // Help page modal open/close
+  const helpLink = document.getElementById('help-link');
+  const helpModal = document.getElementById('help-modal');
+  const closeHelp = document.getElementById('close-help');
+
+  helpLink.addEventListener('click', () => {
+    helpModal.classList.add('active');
+  });
+
+  closeHelp.addEventListener('click', () => {
+    helpModal.classList.remove('active');
+  });
+</script>
+
+</body>
+    </html>
