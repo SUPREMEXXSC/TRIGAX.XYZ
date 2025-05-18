@@ -14,15 +14,24 @@
     font-family: 'Orbitron', sans-serif;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     user-select: none;
     text-align: center;
+    overflow-x: hidden;
+  }
+
+  #bg-video {
+    position: fixed;
+    right: 0; bottom: 0;
+    min-width: 100%; min-height: 100%;
+    z-index: -1;
+    filter: brightness(0.4);
+    object-fit: cover;
   }
 
   h1 {
     font-size: 5rem;
-    margin: 0;
+    margin: 2rem 0 0 0;
   }
   .neon-blue {
     color: #00bfff;
@@ -49,14 +58,45 @@
     margin-top: 0.5rem;
     font-size: 1.5rem;
     color: #aaa;
-    user-select: none;
+  }
+
+  /* The text box with blue and red outline */
+  #info-box {
+    margin: 3rem auto 4rem auto;
+    max-width: 600px;
+    padding: 1.5rem 2rem;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    background: rgba(0, 0, 0, 0.6);
+    border: 3px solid;
+    border-image-slice: 1;
+    border-width: 3px;
+    border-image-source: linear-gradient(45deg, #00bfff, #ff1a1a);
+    color: #eee;
+    user-select: text;
+    text-align: left;
+    border-radius: 10px;
   }
 </style>
 </head>
 <body>
 
+<video autoplay muted loop id="bg-video" playsinline>
+  <source src="https://cdn.pixabay.com/vimeo/449345548/Fireplace-60767.mp4?width=1920&hash=01a871c7dbd8523cb24493656f4690d1d3ac6070" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 <h1><span class="neon-blue">TRIGA</span> <span class="neon-red">X</span></h1>
 <div id="subtitle">YOUR ULTIMATE SCRIPTING UTILITY</div>
+
+<div id="info-box">
+Say down<br>
+Help.<br>
+What is triga x?<br>
+Triga X is a powerfull roblox script that supports many games!<br>
+Does it have a key?<br>
+No triga x doesn't have a key and will never.
+</div>
 
 </body>
 </html>
